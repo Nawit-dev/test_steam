@@ -3,12 +3,15 @@ from pages.login_page import LoginPage
 
 
 def test_login(driver, fake):
-    login = fake.name()
+    login_name = fake.name()
     password = fake.password()
+
     test_enter = MainPage(driver)
-    test_enter.click_enter()
+    test_enter.open_login_form()
     test_login_form = LoginPage(driver)
-    test_login_form.enter_login(login)
-    test_login_form.enter_password(password)
-    test_login_form.click_sign_in()
-    assert test_login_form.error_text() == 'Пожалуйста, проверьте свой пароль и имя аккаунта и попробуйте снова.'
+    test_login_form.submit_login_form(login_name, password)
+    actual_text = test_login_form.get_error_text()
+    expected_text = 'Пожалуйста, проверьте свой пароль и имя аккаунта и попробуйте снова.'
+    assert actual_text == expected_text
+    f'Ожидали: {expected_text}, получили: {actual_text}'
+

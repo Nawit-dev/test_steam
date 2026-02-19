@@ -37,7 +37,7 @@ class LoginPage:
         """Текст ошибки при неправильном вводе пароля"""
 
         def text_not_empty(driver):
-            el = driver.find_element(LoginPage.ERROR_TEXT)
+            el = driver.find_element(*LoginPage.ERROR_TEXT)
             return el if el.text.strip() != "" else False
 
         element = WebDriverWait(self.driver, LoginPage.TIMEOUT_SHORT).until(text_not_empty)

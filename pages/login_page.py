@@ -10,6 +10,7 @@ class LoginPage:
     INPUT_PASSWORD = (By.XPATH, "//*[@id='responsive_page_template_content']//input[@type='password']")
     BUTTON_ENTER = (By.XPATH, "//*[@id='responsive_page_template_content']//button[@type='submit']")
     ERROR_TEXT = (By.XPATH, "//form//div[5]")
+
     def __init__(self, driver):
         self.driver = driver
 
@@ -18,14 +19,14 @@ class LoginPage:
             ec.element_to_be_clickable(LoginPage.INPUT_LOGIN))
         login.click()
         login = WebDriverWait(self.driver, LoginPage.TIMEOUT_SHORT).until(
-            ec.element_to_be_clickable(LoginPage.INPUT_LOGIN))
+            ec.visibility_of_element_located(LoginPage.INPUT_LOGIN))
         login.send_keys(login_name)
 
         password = WebDriverWait(self.driver, LoginPage.TIMEOUT_SHORT).until(
             ec.element_to_be_clickable(LoginPage.INPUT_PASSWORD))
         password.click()
         password = WebDriverWait(self.driver, LoginPage.TIMEOUT_SHORT).until(
-            ec.element_to_be_clickable(LoginPage.INPUT_PASSWORD))
+            ec.visibility_of_element_located(LoginPage.INPUT_PASSWORD))
         password.send_keys(password_user)
 
         enter = WebDriverWait(self.driver, LoginPage.TIMEOUT_SHORT).until(
@@ -34,10 +35,9 @@ class LoginPage:
 
     def get_error_text(self):
         """Текст ошибки при неправильном вводе пароля"""
-        locator = LoginPage.ERROR_TEXT
 
         def text_not_empty(driver):
-            el = driver.find_element(*locator)
+            el = driver.find_element(LoginPage.ERROR_TEXT)
             return el if el.text.strip() != "" else False
 
         element = WebDriverWait(self.driver, LoginPage.TIMEOUT_SHORT).until(text_not_empty)

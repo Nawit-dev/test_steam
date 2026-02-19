@@ -9,8 +9,7 @@ class LoginPage:
     INPUT_LOGIN = (By.XPATH, "//*[@id='responsive_page_template_content']//input[@type='text']")
     INPUT_PASSWORD = (By.XPATH, "//*[@id='responsive_page_template_content']//input[@type='password']")
     BUTTON_ENTER = (By.XPATH, "//*[@id='responsive_page_template_content']//button[@type='submit']")
-    ERROR_TEXT = (By.XPATH, "//form//div[contains(text(),'Пожалуйста, проверьте')]")
-
+    ERROR_TEXT = (By.XPATH, "//form//div[5]")
     def __init__(self, driver):
         self.driver = driver
 
@@ -18,11 +17,15 @@ class LoginPage:
         login = WebDriverWait(self.driver, LoginPage.TIMEOUT_SHORT).until(
             ec.element_to_be_clickable(LoginPage.INPUT_LOGIN))
         login.click()
+        login = WebDriverWait(self.driver, LoginPage.TIMEOUT_SHORT).until(
+            ec.element_to_be_clickable(LoginPage.INPUT_LOGIN))
         login.send_keys(login_name)
 
         password = WebDriverWait(self.driver, LoginPage.TIMEOUT_SHORT).until(
             ec.element_to_be_clickable(LoginPage.INPUT_PASSWORD))
         password.click()
+        password = WebDriverWait(self.driver, LoginPage.TIMEOUT_SHORT).until(
+            ec.element_to_be_clickable(LoginPage.INPUT_PASSWORD))
         password.send_keys(password_user)
 
         enter = WebDriverWait(self.driver, LoginPage.TIMEOUT_SHORT).until(

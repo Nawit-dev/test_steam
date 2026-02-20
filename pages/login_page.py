@@ -14,6 +14,10 @@ class LoginPage:
     def __init__(self, driver):
         self.driver = driver
 
+    def wait_for_open_login_form(self):
+        WebDriverWait(self.driver, LoginPage.TIMEOUT_SHORT).until(
+            ec.visibility_of_element_located(LoginPage.BUTTON_ENTER))
+
     def submit_login_form(self, login_name, password_user):
         login = WebDriverWait(self.driver, LoginPage.TIMEOUT_SHORT).until(
             ec.element_to_be_clickable(LoginPage.INPUT_LOGIN))

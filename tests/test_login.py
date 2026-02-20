@@ -14,4 +14,3 @@ def test_login(driver, fake):
     expected_text = 'Пожалуйста, проверьте свой пароль и имя аккаунта и попробуйте снова.'
     assert actual_text == expected_text
     f'Ожидали: {expected_text}, получили: {actual_text}'
-

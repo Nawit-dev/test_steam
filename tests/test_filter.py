@@ -3,7 +3,7 @@ from pages.main_page import MainPage
 from pages.results_page import ResultPage
 
 
-@pytest.mark.parametrize("game_name, expected_count", [("The Witcher", 10), ("Fallout", 20)])
+@pytest.mark.parametrize("game_name, expected_count", [("The Witcher", 10), ("Fallout", 20)], ids=[f"game 1", "game 2"])
 def test_filter(driver, game_name, expected_count):
     test_enter = MainPage(driver)
     test_enter.wait_for_open()

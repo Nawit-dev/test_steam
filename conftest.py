@@ -1,19 +1,14 @@
 import pytest
 from selenium import webdriver
-from faker import Faker
-
-LINK_SITE = "https://store.steampowered.com/"
+from locales import LOCALES
 
 
-@pytest.fixture()
-def driver():
-    driver_chrome = webdriver.Chrome()
-    driver_chrome.get(LINK_SITE)
-    yield driver_chrome
-    driver_chrome.quit()
+@pytest.fixture(params=["ru", "en"])
+def driver(request):
+    lang = request.param
+    driver = webdriver.Chrome()
 
-
-@pytest.fixture()
-def fake():
-    fake = Faker("en_US")
-    return fake
+    driver.get(f"https://store.steampowered.com/?l={lang}")
+    driver.locale = LOCALES[lang]
+    yield driver
+    driver.quit()

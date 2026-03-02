@@ -13,11 +13,11 @@ def test_filter(browser, game_name, expected_count):
         url = f"{browser.base_url}?l={language}"
         browser.driver.get(url)
 
-        main_page = MainPage(browser.driver)
+        main_page = MainPage()
         main_page.wait_for_open()
         main_page.search_game(game_name)
 
-        result_page = ResultPage(browser.driver)
+        result_page = ResultPage()
         result_page.sort_list_game()
         games_price = result_page.get_results(expected_count)
         assert all(games_price[i] < games_price[i + 1] for i in range(len(games_price) - 1))

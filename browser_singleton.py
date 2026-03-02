@@ -1,6 +1,7 @@
 import json
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from tests.config_reader import ConfigReader
 
 
 class Singleton(type):
@@ -14,16 +15,15 @@ class Singleton(type):
 
 class Driver(metaclass=Singleton):
     def __init__(self):
-        with open("config.json") as f:
-            config = json.load(f)
+        self.config = ConfigReader.open_config()
 
         options = Options()
-        if config["browser_options"].get("headless"):
+        if self.config["browser_options"].get("headless"):
             options.add_argument("--headless")
-        if config["browser_options"].get("window_size"):
+        if self.config["browser_options"].get("window_size"):
             options.add_argument(
-                f'--window_size={config["browser_options"]["window_size"]}'
+                f'--window_size={self.config["browser_options"]["window_size"]}'
             )
         self.driver = webdriver.Chrome(options=options)
-        self.timeout = config["timeout"]
-        self.base_url = f'{config["base_url"]}'
+        self.timeout = self.config["timeout"]
+        self.base_url = f'{self.config["base_url"]}'

@@ -1,4 +1,3 @@
-import json
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from tests.config_reader import ConfigReader
@@ -14,7 +13,7 @@ class Singleton(type):
 
 
 class Driver(metaclass=Singleton):
-    def __init__(self):
+    def __init__(self, lang="en-US"):
         self.config = ConfigReader.open_config()
 
         options = Options()
@@ -24,6 +23,21 @@ class Driver(metaclass=Singleton):
             options.add_argument(
                 f'--window_size={self.config["browser_options"]["window_size"]}'
             )
-        self.driver = webdriver.Chrome(options=options)
+        options.add_argument(f"--lang={lang}")
+        options.add_experimental_option(
+            "prefs",
+            {"intl.accept_languages": lang}
+        )
+
+        self._driver = webdriver.Chrome(options=options)
         self.timeout = self.config["timeout"]
         self.base_url = f'{self.config["base_url"]}'
+
+    def get_driver(self):
+        return self._driver
+
+    @classmethod
+    def reset(cls):
+        if cls in cls._instances:
+            cls._instances[cls]._driver.quit()
+            del cls._instances[cls]

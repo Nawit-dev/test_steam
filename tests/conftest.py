@@ -3,9 +3,9 @@ from browser_singleton import Driver
 
 
 @pytest.fixture(scope="function")
-def browser() -> Driver:
-    driver_instance = Driver()
+def browser(language) -> Driver:
+    driver_instance = Driver(lang=language)
     yield driver_instance
 
-    driver_instance.driver.quit()
+    driver_instance.get_driver().quit()
     Driver._instances = {}

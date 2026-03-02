@@ -10,7 +10,7 @@ class MainPage:
     SEARCH_INPUT = (By.XPATH, "//input[@type='text']")
 
     def __init__(self):
-        self.driver = Driver().driver
+        self.driver = Driver().get_driver()
         self.timeout = Driver().timeout
 
     def wait_for_open(self):

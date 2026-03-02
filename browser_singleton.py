@@ -36,8 +36,4 @@ class Driver(metaclass=Singleton):
     def get_driver(self):
         return self._driver
 
-    @classmethod
-    def reset(cls):
-        if cls in cls._instances:
-            cls._instances[cls]._driver.quit()
-            del cls._instances[cls]
+
